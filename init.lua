@@ -4,6 +4,8 @@ require('load_packages')
 
 require('vim_options')
 
+require('luasnips')
+
 local keymaps = require('keymaps')
 
 -- [[ Highlight on yank ]]

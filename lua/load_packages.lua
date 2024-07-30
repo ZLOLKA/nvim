@@ -134,6 +134,11 @@ require('packer').startup(function(use)
     end,
   }
 
+  use {
+    "L3MON4D3/LuaSnip",
+    run = "make install_jsregexp"
+  }
+
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
   if has_plugins then
