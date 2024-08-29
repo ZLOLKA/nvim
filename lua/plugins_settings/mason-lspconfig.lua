@@ -6,9 +6,6 @@ local keymaps = require('keymaps')
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
-  clangd = {
-    mason = false,
-  },  -- C/C++
   gopls = {},  -- Golang
   sqlls = {},  -- SQL
   bufls = {},  -- Protobuf
@@ -35,6 +32,31 @@ local mason_lspconfig = require 'mason-lspconfig'
 
 mason_lspconfig.setup {
   ensure_installed = vim.tbl_keys(servers),
+}
+
+local lspconfig = require 'lspconfig'
+
+local configs = require 'lspconfig.configs'
+
+-- Check if the config is already defined (useful when reloading this file)
+if not configs.clangd then
+  configs.clangd = {
+    default_config = {
+      cmd = { 'clangd', '--log=verbose', },
+      filetypes = { 'cpp', 'hpp', 'c', 'h', 'hxx', 'cxx' },
+      root_dir = function(fname)
+        return lspconfig.util.find_git_ancestor(fname)
+      end,
+    },
+  }
+end
+
+lspconfig.clangd.setup {
+  capabilities = capabilities,
+  on_attach = keymaps.on_attach,
+  settings = {
+    maxNumberOfProblems = 100
+  }
 }
 
 mason_lspconfig.setup_handlers {
