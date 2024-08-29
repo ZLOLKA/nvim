@@ -11,7 +11,8 @@ local servers = {
   bufls = {},  -- Protobuf
   neocmake = {},  -- CMake
   bashls = {},  -- Bash
-  -- pyright = {},  -- Python
+  pyright = {},  -- Python
+  pylsp = {},  -- Python
   -- rust_analyzer = {},  -- Rust
   -- tsserver = {},  -- TypeScript
 
