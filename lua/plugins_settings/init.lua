@@ -15,6 +15,7 @@ local plugins_names = {
   "vim-dadbod-ui",
   "winbar",
   "navic",
+  "navbuddy",
 }
 for _, plugin_name in ipairs(plugins_names) do
   require("plugins_settings." .. plugin_name)

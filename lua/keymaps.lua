@@ -97,6 +97,9 @@ function keymaps.on_attach(client, bufnr)
   if client.server_capabilities.documentSymbolProvider then
     navic.attach(client, bufnr)
   end
+
+  local navbuddy = require("nvim-navbuddy")
+  navbuddy.attach(client, bufnr)
 end
 
 keymaps.v.select_textobjects = {
