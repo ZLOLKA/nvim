@@ -13,6 +13,7 @@ local servers = {
   bashls = {},  -- Bash
   pyright = {},  -- Python
   pylsp = {},  -- Python
+  jsonls = {},
   -- rust_analyzer = {},  -- Rust
   -- tsserver = {},  -- TypeScript
 
