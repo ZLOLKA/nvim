@@ -13,6 +13,8 @@ local plugins_names = {
   "cmp",
   "nvim-dap-projects",
   "vim-dadbod-ui",
+  "winbar",
+  "navic",
 }
 for _, plugin_name in ipairs(plugins_names) do
   require("plugins_settings." .. plugin_name)

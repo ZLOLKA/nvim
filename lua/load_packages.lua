@@ -145,6 +145,15 @@ require('packer').startup(function(use)
     "f-person/git-blame.nvim"
   }
 
+  use {
+    'BeeverFeever/winbar.nvim',
+    requires = {
+      "SmiteshP/nvim-navic",
+      "neovim/nvim-lspconfig",
+      "nvim-tree/nvim-web-devicons"
+    }
+  }
+
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
   if has_plugins then
