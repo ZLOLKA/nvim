@@ -164,6 +164,7 @@ require('packer').startup(function(use)
       "nvim-telescope/telescope.nvim" -- Optional
     }
   }
+  use { "p00f/clangd_extensions.nvim" }
 
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
