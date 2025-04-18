@@ -55,13 +55,26 @@ local configs = require 'lspconfig.configs'
 
 -- Check if the config is already defined (useful when reloading this file)
 if not configs.clangd then
+  local cmd = {
+    'clangd',
+    '--compile-commands-dir=./build',
+    '--background-index',
+    '--all-scopes-completion=true',
+    '--completion-style=detailed',
+    '--pch-storage=memory',
+    '--enable-config',
+    '--clang-tidy',
+    '-j', '32',
+  }
+
   configs.clangd = {
     default_config = {
-      cmd = { 'clangd', '--log=verbose', },
+      cmd = cmd,
       filetypes = { 'cpp', 'hpp', 'c', 'h', 'hxx', 'cxx' },
       root_dir = function(fname)
-        return lspconfig.util.find_git_ancestor(fname)
+        return vim.fn.getcwd()
       end,
+      single_file_support = false,
     },
   }
 end
@@ -70,8 +83,8 @@ lspconfig.clangd.setup {
   capabilities = capabilities,
   on_attach = keymaps.on_attach,
   settings = {
-    maxNumberOfProblems = 100
-  }
+    maxNumberOfProblems = 10000000
+  },
 }
 
 mason_lspconfig.setup_handlers {
