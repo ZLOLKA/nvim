@@ -12,6 +12,12 @@ local function my_fmt(str, arr)
   })
 end
 
+local function my_fmt_for_tmpl(str, arr)
+  return fmt(str, arr, {
+    delimiters = "^$"
+  })
+end
+
 ls.add_snippets("cpp", {
   s("namespace", my_fmt([[
   namespace <> {
@@ -23,17 +29,59 @@ ls.add_snippets("cpp", {
   )),
 
   s("class", my_fmt([[
-  class <> {
-    <>
+  class <><> {
+      <>
   };  // class <>
-  ]], {i(1), i(0), rep(1)}
+  ]], {i(1), i(2), i(0), rep(1)}
   )),
 
   s("struct", my_fmt([[
-  struct <> {
-    <>
+  struct <><> {
+      <>
   };  // struct <>
-  ]], {i(1), i(0), rep(1)}
+  ]], {i(1), i(2), i(0), rep(1)}
+  )),
+
+  s("co_await", my_fmt([[
+  co_await <>;
+  ]], {i(0)}
+  )),
+
+  s("co_yield", my_fmt([[
+  co_yield <>;
+  ]], {i(0)}
+  )),
+
+  s("co_return", my_fmt([[
+  co_return <>;
+  ]], {i(0)}
+  )),
+
+  s("concept", my_fmt_for_tmpl([[
+  template <class T^$>
+  concept ^$ = ^$;
+  ]], {i(2), i(1), i(0)}
+  )),
+
+  s("concept_req", my_fmt_for_tmpl([[
+  template <class T^$>
+  concept ^$ = requires(T t^$) {
+      ^$
+  };  // concept ^$
+  ]], {i(2), i(1), i(3), i(0), rep(1)}
+  )),
+
+  s("templ", my_fmt_for_tmpl([[
+  template <class ^$>
+  ^$
+  ]], {i(1), i(0)}
+  )),
+
+  s("templ_req", my_fmt_for_tmpl([[
+  template <class ^$>
+      requires ^$
+  ^$
+  ]], {i(1), i(2), i(0)}
   )),
 })
 
