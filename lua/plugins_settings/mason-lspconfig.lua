@@ -6,14 +6,26 @@ local keymaps = require('keymaps')
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
-  gopls = {},  -- Golang
+  -- gopls = {},  -- Golang
   sqlls = {},  -- SQL
-  bufls = {},  -- Protobuf
+  buf_ls = {},  -- Protobuf
   neocmake = {},  -- CMake
   bashls = {},  -- Bash
-  pyright = {},  -- Python
   pylsp = {},  -- Python
-  jsonls = {},
+  jsonls = {
+    json = {
+      format = {
+        enable = 9 --true,
+      },
+      validate = { enable = true },
+      trailingCommas = 'ignore',
+      allowTrailingCommas = true,
+      DocumentLanguageSettings = {
+        trailingCommas = 'ignore',
+        allowTrailingCommas = true,
+      },
+    }
+    },
   -- rust_analyzer = {},  -- Rust
   -- tsserver = {},  -- TypeScript
 
