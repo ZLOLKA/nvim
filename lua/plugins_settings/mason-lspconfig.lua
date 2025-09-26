@@ -6,13 +6,12 @@ local keymaps = require('keymaps')
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
-  -- gopls = {},  -- Golang
-  sqlls = {},  -- SQL
-  buf_ls = {},  -- Protobuf
-  neocmake = {},  -- CMake
+  ansiblels = {},  -- Ansible
   bashls = {},  -- Bash
-  pylsp = {},  -- Python
-  jsonls = {
+  buf_ls = {},  -- Protobuf
+  dockerls = {},  -- Docker
+  gitlab_ci_ls = {},  -- Gitlab CI
+  jsonls = {  -- JSON
     json = {
       format = {
         enable = 9 --true,
@@ -25,16 +24,18 @@ local servers = {
         allowTrailingCommas = true,
       },
     }
-    },
-  -- rust_analyzer = {},  -- Rust
-  -- tsserver = {},  -- TypeScript
-
+  },
+  ltex_plus = {},  -- LATEX
   lua_ls = {  -- Lua
     Lua = {
       workspace = { checkThirdParty = false },
       telemetry = { enable = false },
     },
   },
+  neocmake = {},  -- CMake
+  pylsp = {},  -- Python
+  sqlls = {},  -- SQL
+  yamlls = {},  -- YAML
 }
 
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
@@ -45,8 +46,18 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 -- Ensure the servers above are installed
 local mason_lspconfig = require 'mason-lspconfig'
 
+local servers_names = {}
+for k, v in pairs(servers) do
+    table.insert(servers_names, k)
+    vim.lsp.config(k, {
+        capabilities = capabilities,
+        on_attach = keymaps.on_attach,
+        settings = v,
+    })
+end
+
 mason_lspconfig.setup {
-  ensure_installed = vim.tbl_keys(servers),
+  ensure_installed = servers_names,
 }
 
 local lspconfig = require 'lspconfig'
@@ -85,15 +96,5 @@ lspconfig.clangd.setup {
   settings = {
     maxNumberOfProblems = 10000000
   },
-}
-
-mason_lspconfig.setup_handlers {
-  function(server_name)
-    require('lspconfig')[server_name].setup {
-      capabilities = capabilities,
-      on_attach = keymaps.on_attach,
-      settings = servers[server_name],
-    }
-  end,
 }
 
